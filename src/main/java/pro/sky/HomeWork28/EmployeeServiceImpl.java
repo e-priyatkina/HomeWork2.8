@@ -51,36 +51,4 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Collection<Employee> printEmployees() {
         return Collections.unmodifiableCollection(employees.values());
     }
-
-    @Override
-    public Employee minimumSalaryDepartment (int department) { //минимальная зарплата по отделу
-        return employees.values().stream()
-                .filter(e -> e.getDepartment() == department)
-                .min(Comparator.comparingInt(Employee::getSalary))
-                .orElse(null);
-    }
-
-    @Override
-    public Employee maximumSalaryDepartment(int department) { //максимальная зарплата по отделу
-        return employees.values().stream()
-                .filter(e -> e.getDepartment() == department)
-                .max(Comparator.comparingInt(Employee::getSalary))
-                .orElse(null);
-    }
-
-    @Override
-    public Collection<Employee> printEmployeesDepartment(int department) { //вывод списка сотрудников отдела
-        return EmployeeService.values().stream()
-                .collect(Collectors.groupingBy(Employee::getDepartment));
-    }
-
-    @Override
-    public Employee printEmployeesByDepartment() {
-        for (int i = 1; i <= 5; i++) {
-            System.out.println("Сотрудники " + i + "-го отдела");
-            return EmployeeService.values().stream()
-                    .collect(Collectors.groupingBy(Employee::i);
-        }
-        return null;
-    }
 }

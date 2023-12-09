@@ -10,12 +10,4 @@ public interface EmployeeService {
     Employee findEmployee(String firstName, String lastName, int salary, int department);
 
     Collection<Employee> printEmployees();
-
-    Employee minimumSalaryDepartment(int department);
-
-    Employee maximumSalaryDepartment(int department);
-
-    Collection<Employee> printEmployeesDepartment(int department);
-
-    Employee printEmployeesByDepartment();
 }
