@@ -8,7 +8,5 @@ public interface DepartmentService {
 
     Employee maximumSalaryDepartment(int department);
 
-    Collection<Employee> printEmployeesDepartment(int department);
-
-    Employee printEmployeesByDepartment();
+    void printEmployeesDepartment(int department);
 }

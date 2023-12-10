@@ -3,48 +3,55 @@ package pro.sky.HomeWork28;
 import org.springframework.stereotype.Service;
 import pro.sky.HomeWork28.exception.EmployeeAlreadyAddedException;
 import pro.sky.HomeWork28.exception.EmployeeNotFoundException;
+import pro.sky.HomeWork28.exception.EmployeeStorageIsFullException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    //коллекция сотрудников
+    private static final int MAX_EMPLOYEES = 3;
+
     private final Map<String, Employee> employees;
 
     public EmployeeServiceImpl() {
         this.employees = new HashMap<>();
     }
 
-    //максимально возможное количество сотрудников
-    final int maxEmployees = 3;
+    private String buildKey(String firstName, String lastName) {
+        return firstName + lastName;
+    }
+
     @Override
     public Employee addEmployee(String firstName, String lastName, int salary, int department) {
-        Employee newEmployee = new Employee(firstName, lastName, salary, department);
-        if (employees.containsKey(newEmployee.getFullName())) {
+        if (employees.size() == MAX_EMPLOYEES) {
+            throw new EmployeeStorageIsFullException("");
+        }
+        String key = buildKey(firstName, lastName);
+        if (employees.containsKey(key)) {
             throw new EmployeeAlreadyAddedException("Сотрудник уже существует");
         }
-        employees.put(newEmployee.getFullName(), newEmployee);
-        return newEmployee;
+        employees.put(key, new Employee(firstName, lastName, salary, department));
+        return null;
     }
 
     @Override
-    public Employee removeEmployee(String firstName, String lastName, int salary, int department) {
-        Employee removeEmployee = new Employee(firstName, lastName, salary, department);
-        if (employees.containsKey(removeEmployee.getFullName())) {
-            employees.remove(removeEmployee.getFullName());
-            return removeEmployee;
+    public Employee removeEmployee(String firstName, String lastName) {
+        String key = buildKey(firstName, lastName);
+        Employee employee = employees.remove(key);
+        if (employee == null) {
+            throw new EmployeeNotFoundException("Сотрудник не найден");
         }
-        throw new EmployeeNotFoundException("Сотрудник не найден");
+        return employee;
     }
 
     @Override
-    public Employee findEmployee(String firstName, String lastName, int salary, int department) {
-        Employee findEmployee = new Employee(firstName, lastName, salary, department);
-        if (employees.containsKey(findEmployee.getFullName())) {
-            return employees.get(findEmployee.getFullName());
+    public Employee findEmployee(String firstName, String lastName) {
+        String key = buildKey(firstName, lastName);
+        Employee employee = employees.get(key);
+        if (employee == null) {
+            throw new EmployeeNotFoundException("Сотрудник не найден");
         }
-        throw new EmployeeNotFoundException("Сотрудник не найден");
+        return employee;
     }
 
     @Override

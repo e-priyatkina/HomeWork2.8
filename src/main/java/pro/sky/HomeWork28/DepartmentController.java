@@ -29,14 +29,9 @@ public class DepartmentController {
         return departmentService.minimumSalaryDepartment(departmentId);
     }
 
-    @GetMapping(value = "/all", params = "departmentId")
-    public Employee printEmployeesByDepartment() {
-        return departmentService.printEmployeesByDepartment();
-    }
-
     @GetMapping("/all")
-    public Collection<Employee> printEmployeesDepartment(@RequestParam int departmentId) {
-        return departmentService.printEmployeesDepartment(departmentId);
+    public void printEmployeesDepartment(@RequestParam int departmentId) {
+        departmentService.printEmployeesDepartment(departmentId);
     }
 }
 
