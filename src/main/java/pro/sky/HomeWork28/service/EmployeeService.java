@@ -1,4 +1,6 @@
-package pro.sky.HomeWork28;
+package pro.sky.HomeWork28.service;
+
+import pro.sky.HomeWork28.model.Employee;
 
 import java.util.Collection;
 

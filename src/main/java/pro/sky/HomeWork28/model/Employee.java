@@ -1,4 +1,4 @@
-package pro.sky.HomeWork28;
+package pro.sky.HomeWork28.model;
 
 import java.util.Objects;
 

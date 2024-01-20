@@ -1,15 +1,17 @@
-package pro.sky.HomeWork28;
+package pro.sky.HomeWork28.service;
 
 import org.springframework.stereotype.Service;
 import pro.sky.HomeWork28.exception.EmployeeAlreadyAddedException;
 import pro.sky.HomeWork28.exception.EmployeeNotFoundException;
 import pro.sky.HomeWork28.exception.EmployeeStorageIsFullException;
+import pro.sky.HomeWork28.model.Employee;
+import pro.sky.HomeWork28.service.EmployeeService;
 
 import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    private static final int MAX_EMPLOYEES = 3;
+    private static final int MAX_EMPLOYEES = 5;
 
     private final Map<String, Employee> employees;
 
