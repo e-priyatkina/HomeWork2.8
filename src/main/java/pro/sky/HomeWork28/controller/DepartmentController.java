@@ -18,8 +18,8 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}/employees")
-    public void printEmployeesDepartment(@PathVariable("id") int departmentId) {
-        departmentService.printEmployeesDepartment(departmentId);
+    public List<Employee> printEmployeesDepartment(@PathVariable("id") int departmentId) {
+        return departmentService.printEmployeesDepartment(departmentId);
     }
 
     @GetMapping("/{id}/salary/sum")

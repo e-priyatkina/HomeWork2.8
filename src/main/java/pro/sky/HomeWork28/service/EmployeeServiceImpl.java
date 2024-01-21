@@ -32,8 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employees.containsKey(key)) {
             throw new EmployeeAlreadyAddedException("Сотрудник уже существует");
         }
-        employees.put(key, new Employee(firstName, lastName, salary, department));
-        return null;
+        return employees.put(key, new Employee(firstName, lastName, salary, department));
     }
 
     @Override

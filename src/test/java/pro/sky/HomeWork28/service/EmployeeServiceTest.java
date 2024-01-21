@@ -16,95 +16,95 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 
 public class EmployeeServiceTest {
 
-    private final EmployeeServiceImpl employeeServiceImpl = new EmployeeServiceImpl();
+    private final EmployeeService employeeService = new EmployeeServiceImpl();
 
     @AfterEach
     public void afterEach() {
-        Collection<Employee> copy = new ArrayList<>(employeeServiceImpl.printEmployees());
+        Collection<Employee> copy = new ArrayList<>(employeeService.printEmployees());
         for (Employee employee : copy) {
-            employeeServiceImpl.removeEmployee(employee.getFirstName(), employee.getLastName());
+            employeeService.removeEmployee(employee.getFirstName(), employee.getLastName());
         }
     }
 
     @BeforeEach
     public void beforeEach() {
-        employeeServiceImpl.addEmployee("Ivan", "Ivanov", 10000, 1);
-        employeeServiceImpl.addEmployee("Petr", "Petrov", 20000, 2);
-        employeeServiceImpl.addEmployee("Maria", "Sidorova", 15000, 3);
-        employeeServiceImpl.addEmployee("Anna", "Potapenko", 12000, 1);
+        employeeService.addEmployee("Ivan", "Ivanov", 10000, 1);
+        employeeService.addEmployee("Petr", "Petrov", 20000, 2);
+        employeeService.addEmployee("Maria", "Sidorova", 15000, 3);
+        employeeService.addEmployee("Anna", "Potapenko", 12000, 1);
     }
 
     @Test
     void addPositiveTest() {
         Employee expected = new Employee("Oleg", "Sidorov", 30000, 2);
 
-        employeeServiceImpl.addEmployee("Oleg", "Sidorov", 30000, 2);
-        assertThatNoException().isThrownBy(() -> employeeServiceImpl.findEmployee("Oleg", "Sidorov"));
-        assertThat(employeeServiceImpl.findEmployee("Oleg", "Sidorov")).isEqualTo(expected);
-        assertThat(employeeServiceImpl.printEmployees()
+        employeeService.addEmployee("Oleg", "Sidorov", 30000, 2);
+        assertThatNoException().isThrownBy(() -> employeeService.findEmployee("Oleg", "Sidorov"));
+        assertThat(employeeService.findEmployee("Oleg", "Sidorov")).isEqualTo(expected);
+        assertThat(employeeService.printEmployees()
                 .contains(expected));
     }
 
     @Test
     void addNegativeOneTest() {
         for (int i = 0; i < 1; i++) {
-            employeeServiceImpl.addEmployee("Alexey" + i, "Alexeev" + i, 20000, 2);
+            employeeService.addEmployee("Alexey" + i, "Alexeev" + i, 20000, 2);
         }
-        assertThat(employeeServiceImpl.printEmployees()).hasSize(5);
+        assertThat(employeeService.printEmployees()).hasSize(5);
 
         assertThatExceptionOfType(EmployeeStorageIsFullException.class)
-                .isThrownBy(() -> employeeServiceImpl.addEmployee("Alexey", "Alexeev", 30000, 3));
+                .isThrownBy(() -> employeeService.addEmployee("Alexey", "Alexeev", 30000, 3));
     }
 
     @Test
     void addNegativeTwoTest() {
         Employee expected = new Employee("Ivan", "Ivanov", 10000, 1);
-        assertThat(employeeServiceImpl.printEmployees()).contains(expected);
+        assertThat(employeeService.printEmployees()).contains(expected);
 
         assertThatExceptionOfType(EmployeeAlreadyAddedException.class)
-                .isThrownBy(() -> employeeServiceImpl.addEmployee("Ivan", "Ivanov", 10000, 1));
+                .isThrownBy(() -> employeeService.addEmployee("Ivan", "Ivanov", 10000, 1));
     }
 
     @Test
     void removePositiveTest() {
         Employee expected = new Employee("Ivan", "Ivanov", 10000, 1);
-        assertThat(employeeServiceImpl.printEmployees()).contains(expected);
+        assertThat(employeeService.printEmployees()).contains(expected);
 
-        employeeServiceImpl.removeEmployee("Ivan", "Ivanov");
+        employeeService.removeEmployee("Ivan", "Ivanov");
 
-        assertThat(employeeServiceImpl.printEmployees()).doesNotContain(expected);
+        assertThat(employeeService.printEmployees()).doesNotContain(expected);
         assertThatExceptionOfType(EmployeeNotFoundException.class)
-                .isThrownBy(() -> employeeServiceImpl.findEmployee("Ivan", "Ivanov"));
+                .isThrownBy(() -> employeeService.findEmployee("Ivan", "Ivanov"));
     }
 
     @Test
     void removeNegativeTest() {
         Employee expected = new Employee("Andrey", "Andreev", 10000, 1);
-        assertThat(employeeServiceImpl.printEmployees()).doesNotContain(expected);
+        assertThat(employeeService.printEmployees()).doesNotContain(expected);
 
         assertThatExceptionOfType(EmployeeNotFoundException.class)
-                .isThrownBy(() -> employeeServiceImpl.removeEmployee("Andrey", "Andreev"));
+                .isThrownBy(() -> employeeService.removeEmployee("Andrey", "Andreev"));
     }
 
     @Test
     void findPositiveTest() {
         Employee expected = new Employee("Ivan", "Ivanov", 10000, 1);
-        assertThat(employeeServiceImpl.printEmployees()).contains(expected);
-        assertThat(employeeServiceImpl.findEmployee("Ivan", "Ivanov")).isEqualTo(expected);
+        assertThat(employeeService.printEmployees()).contains(expected);
+        assertThat(employeeService.findEmployee("Ivan", "Ivanov")).isEqualTo(expected);
     }
 
     @Test
     void findNegativeTest() {
         Employee expected = new Employee("Andrey", "Andreev", 10000, 1);
-        assertThat(employeeServiceImpl.printEmployees()).doesNotContain(expected);
+        assertThat(employeeService.printEmployees()).doesNotContain(expected);
 
         assertThatExceptionOfType(EmployeeNotFoundException.class)
-                .isThrownBy(() -> employeeServiceImpl.findEmployee("Andrey", "Andreev"));
+                .isThrownBy(() -> employeeService.findEmployee("Andrey", "Andreev"));
     }
 
     @Test
     void printEmployees() {
-        assertThat(employeeServiceImpl.printEmployees()).containsExactlyInAnyOrder(
+        assertThat(employeeService.printEmployees()).containsExactlyInAnyOrder(
             new Employee("Ivan", "Ivanov", 10000, 1),
             new Employee("Petr", "Petrov", 20000, 2),
             new Employee("Maria", "Sidorova", 15000, 3),
